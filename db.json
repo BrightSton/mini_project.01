@@ -1,0 +1,29 @@
+{
+  "posts": [
+    {
+      "id": 0,
+      "image": "https://cdn.pixabay.com/photo/2014/11/05/15/57/salmon-518032_960_720.jpg",
+      "nickname": "psb",
+      "createAt": "2015.03.24",
+      "likeCount": 10,
+      "likeByMe": true
+    },
+    {
+      "id": 1,
+      "image": "https://cdn.pixabay.com/photo/2014/11/05/15/57/salmon-518032_960_720.jpg",
+      "nickname": "psb",
+      "createAt": "2015.05.14",
+      "likeCount": 3,
+      "likeByMe": false
+    },
+    {
+      "id": 2,
+      "image": "https://cdn.pixabay.com/photo/2014/11/05/15/57/salmon-518032_960_720.jpg",
+      "nickname": "Gridy",
+      "crateAt": "2015.06.24",
+      "likeCount": 0,
+      "likeByMe": false
+    }
+  ]
+  
+}

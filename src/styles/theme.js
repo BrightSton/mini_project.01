@@ -4,7 +4,7 @@ const color = {
     heavyGrey: '#777777',
     grey: '#AAAAAA',
     lightGrey: '#DDDDDD',
-    whitesmoke: '#EEEEEE',
+    whiteSmoke: '#EEEEEE',
     white: '#FFFFFF',
     red: '#E91E63',
 }
