@@ -1,7 +1,7 @@
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import Router from './Router';
 import { defaultTheme } from './styles/theme';
-import common from './styles/common.scss';
+import common from './styles/common.css';
 // import { Provider } from 'react-redux';
 
 
