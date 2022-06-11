@@ -4,7 +4,6 @@ import { defaultTheme } from './styles/theme';
 import common from './styles/common.css';
 // import { Provider } from 'react-redux';
 
-
 function App() {
   const theme = defaultTheme;
   return (
@@ -20,7 +19,8 @@ function App() {
 const GlobalStyle = createGlobalStyle`
 ${common}; // Reset CSS
 
-body, button, input {
+body, button, input, textarea {
+  color: ${props => props.theme.color.black};
   font-family: ${props => props.theme.fontFamily.default}, sans-serif;
 }
 
