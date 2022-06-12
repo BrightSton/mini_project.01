@@ -1,10 +1,48 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import Header from "../components/Header";
+import { useEffect, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { getPostById, likePost } from "../redux/modules/post";
+import { addComment, getCommentListByPostId } from "../redux/modules/comment";
+
 
 const Detail = () => {
+  const params = useParams();
+  const dispatch = useDispatch();
+  const post = useSelector((state) => state.post.post);
+  const comments = useSelector((state) => state.comment.list);
+  const commentsCount = useSelector((state) => state.comment.count);
+  const user = useSelector((state) => state.user);
+  const commentTag = useRef(null);
+
+  const addCommentSubmit = (e) => {
+    e.preventDefault();
+
+    dispatch(addComment({
+      nickname: user.nickname,
+      content: commentTag.current.value,
+      createAt: "2015.03.15",
+      postId: Number(params.id)
+    }));
+  }
+
+  const likeClick = (e) => {
+    dispatch(likePost({
+      postId: Number(params.id),
+      likeCount: post.likeCount,
+      likeByMe: post.likeByMe
+    }));
+  }
+
+  useEffect(() => {
+    dispatch(getPostById(Number(params.id)));
+    dispatch(getCommentListByPostId(Number(params.id)));
+  }, []);
+
   return (
     <Container>
       <Box>
@@ -12,41 +50,36 @@ const Detail = () => {
         <Content>
           <Post>
             <PostImage>
-              <img src="https://cdn.pixabay.com/photo/2014/11/05/15/57/salmon-518032_960_720.jpg" alt="" />  
-            </PostImage>            
+              <img src={post.image} alt="" />  
+            </PostImage>
             <PostHeader>
-              <PostDate>2015.01.25</PostDate>
-              <PostSubject>맛있는 연어 스테이크 굽기</PostSubject>
-              <PostAuthorName>닉네임</PostAuthorName>
+              <PostDate>{post.createAt}</PostDate>
+              <PostSubject>{post.title}</PostSubject>
+              <PostAuthorName>{post.nickname}</PostAuthorName>
             </PostHeader>
             <PostContent>
-              <PostText>
-                1. 굽는다<br/>
-                2. 튀긴다<br/>
-                3. 먹는다<br/>
-              </PostText>
-              <PostLike>
-                <FontAwesomeIcon icon={faHeart} />
-                <LikeText>좋아요 +3</LikeText>
+              <PostText>{post.content}</PostText>
+              <PostLike isActive={post.likeByMe}>
+                <LikeIcon icon={faHeart} onClick={likeClick} />
+                <LikeText>좋아요 {post.likeCount === 0 ? "0" : `+${post.likeCount}`}</LikeText>
               </PostLike>
             </PostContent>
           </Post>
           <CommentBox>
-            <CommentTitle>Comments<CommentCount>2</CommentCount></CommentTitle>
+            <CommentTitle>Comments<CommentCount>{commentsCount}</CommentCount></CommentTitle>
             <CommentList>
-              <Comment>
-                <CommentName>닉네임</CommentName>
-                <CommentText>너무 마시써용</CommentText>
-                <CommentDate>2015.03.15</CommentDate>
-              </Comment>
-              <Comment>
-                <CommentName>닉네임</CommentName>
-                <CommentText>너무 마시써용</CommentText>
-                <CommentDate>2015.03.15</CommentDate>
-              </Comment>
+              {comments.map((comment, index) => {
+                return (
+                  <Comment key={index}>
+                      <CommentName>{comment.nickname}</CommentName>
+                      <CommentText>{comment.content}</CommentText>
+                      <CommentDate>{comment.createAt}</CommentDate>
+                  </Comment>
+                );
+              })}
             </CommentList>
-            <CommentForm>
-              <FormText></FormText>
+            <CommentForm onSubmit={addCommentSubmit}>
+              <FormText ref={commentTag}></FormText>
               <FormBtn>댓글쓰기</FormBtn>
             </CommentForm>
           </CommentBox>
@@ -110,12 +143,26 @@ const PostText = styled.div`
   line-height: 2;
 `;
 
+
+const LikeIcon = styled(FontAwesomeIcon)`
+  cursor: pointer;
+  transition: color .3s;
+  &:hover {
+    color: ${props => props.theme.color.lightGrey};
+  }
+`;
+
 const PostLike = styled.div`
   margin-top: 20px;
   font-size: 24px;
   color: ${props => props.theme.color.grey};
   display: flex;
   align-items: center;
+  ${props => props.isActive && css`
+    ${LikeIcon} {
+      color: ${props => props.theme.color.red};
+    }
+  `}
 `;
 
 const LikeText = styled.div`
@@ -144,20 +191,20 @@ const CommentList = styled.ul`
 
 const Comment = styled.li`
   width: 100%;
-  height: 60px;
+  min-height: 60px;
   box-shadow: 0 0 6px 0 #ddd;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-radius: 10px;
-  padding: 0 20px;
+  padding: 20px 20px;
 `;
 
 const CommentName = styled.div`
   width: 100px;
 `;
 
-const CommentText = styled.div`
+const CommentText = styled.pre`
   width: 100%;
 `;
 
@@ -166,7 +213,7 @@ const CommentDate = styled.div`
   color: ${props => props.theme.color.heavyGrey};
 `;
 
-const CommentForm = styled.div`
+const CommentForm = styled.form`
   margin-top: 20px;
   width: 100%;
   height: 70px;
@@ -178,8 +225,11 @@ const CommentForm = styled.div`
 
 const FormText = styled.textarea`
   resize: none;
-  width: 90%;
   border: none;
+  outline: none;
+  width: 90%;
+  padding: 20px;
+  font-size: 16px;
 `;
 
 const FormBtn = styled.button`
@@ -187,6 +237,13 @@ const FormBtn = styled.button`
   border: none;
   background-color: ${props => props.theme.color.blue};
   color: ${props => props.theme.color.white};
+  cursor: pointer;
+  transition: background-color .3s, color .3s;
+
+  &:hover {
+    color: ${props => props.theme.color.blue};
+    background-color: ${props => props.theme.color.black};
+  }
 `;
 
 export default Detail;

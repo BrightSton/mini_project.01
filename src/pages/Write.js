@@ -1,17 +1,42 @@
 import styled from "styled-components";
 import Header from "../components/Header";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import React, { useRef } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { addPost } from "../redux/modules/post";
 
 const Write = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const user = useSelector((state) => state.user);
+
+  const subjectRef = useRef(null);
+  const contentRef = useRef(null);
+
+  const addPostSubmit = (e) => {
+    e.preventDefault();
+    dispatch(addPost({
+      image: "https://cdn.pixabay.com/photo/2014/11/05/15/57/salmon-518032_960_720.jpg",
+      title: subjectRef.current.value,
+      content: contentRef.current.value,
+      nickname: user.nickname,
+      likeCount: 0,
+      likeByMe: false,
+      category: 0,
+      createAt: "2021.01.28",
+    }));
+    navigate("/");
+  }
+
   return (
     <Container>
       <Box>
         <Header />
         <Content>
-          <Form>
+          <Form onSubmit={addPostSubmit}>
             <Subject>
-              <input type="text" placeholder="제목을 입력해주세요" />
+              <input type="text" placeholder="제목을 입력해주세요" ref={subjectRef} />
             </Subject>
             <Image>
               {/* <img src="" alt="" /> */}
@@ -19,7 +44,7 @@ const Write = () => {
               <input id="imageFile" type="file" />
             </Image>
             <Text>
-              <textarea placeholder="내용을 입력해주세요"></textarea>
+              <textarea placeholder="내용을 입력해주세요" ref={contentRef}></textarea>
             </Text>
             <Button>
               <button>글쓰기</button>
@@ -46,9 +71,10 @@ const Box = styled.div`
 const Content = styled.div`
 `;
 
-const Form = styled.div`
+const Form = styled.form`
   width: 100%;
 `;
+
 const Subject = styled.div`
   width: 100%;
   height: 70px;
