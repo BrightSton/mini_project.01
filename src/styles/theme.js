@@ -7,6 +7,11 @@ const color = {
     whiteSmoke: '#EEEEEE',
     white: '#FFFFFF',
     red: '#E91E63',
+    purple: '#6D5DCD',
+}
+
+const hoverColor = {
+    blue: "#1f5c94",
 }
 
 const fontFamily = {
@@ -15,6 +20,7 @@ const fontFamily = {
 
 export const defaultTheme = {
     color,
+    hoverColor,
     fontFamily,
 };
 

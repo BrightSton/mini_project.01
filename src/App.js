@@ -2,17 +2,18 @@ import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import Router from './Router';
 import { defaultTheme } from './styles/theme';
 import common from './styles/common.css';
-// import { Provider } from 'react-redux';
+import { Provider } from 'react-redux';
+import store from './redux/configStore';
 
 function App() {
   const theme = defaultTheme;
   return (
-    // <Provider store={store}>
+    <Provider store={store}>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <Router />
       </ThemeProvider>
-    // </Provider>
+    </Provider>
   );
 }
 

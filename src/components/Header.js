@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 const Header = () => {
   return (
     <Container>
-      <h1>Food Recipe</h1>
+      <h1><Link to="/">Food Recipe</Link></h1>
       <nav>
         <ul>
-          <li><Link to="/">로그인</Link></li>
+          <li><Link to="/login">로그인</Link></li>
         </ul>
       </nav>
     </Container>
@@ -17,10 +17,16 @@ const Header = () => {
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 50px 0px;
+  padding: 60px 0px;
 
   h1 {
     font-size: 48px;
+    transition: color .3s;
+    cursor: pointer;
+  }
+
+  h1:hover {
+    color: ${props => props.theme.color.heavyGrey};
   }
 
   nav {
@@ -28,9 +34,15 @@ const Container = styled.div`
     align-items: center;
 
     a {
-      padding: 15px;
+      padding: 20px 30px;
+      border-radius: 10px;
       background-color: ${props => props.theme.color.blue};
-      color: ${props => props.theme.color.white}
+      color: ${props => props.theme.color.white};
+      transition: color .3s, background-color .3s;
+    }
+
+    a:hover {
+      background-color: ${props => props.theme.hoverColor.blue};
     }
   }
 `;

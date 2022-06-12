@@ -3,26 +3,124 @@
     {
       "id": 0,
       "image": "https://cdn.pixabay.com/photo/2014/11/05/15/57/salmon-518032_960_720.jpg",
+      "title": "제목1",
       "nickname": "psb",
       "createAt": "2015.03.24",
       "likeCount": 10,
-      "likeByMe": true
+      "likeByMe": true,
+      "category": 0,
+      "content": "1. 굽는다 2. 먹는다 3. 맛있다"
     },
     {
       "id": 1,
       "image": "https://cdn.pixabay.com/photo/2014/11/05/15/57/salmon-518032_960_720.jpg",
+      "title": "제목2",
       "nickname": "psb",
       "createAt": "2015.05.14",
       "likeCount": 3,
-      "likeByMe": false
+      "likeByMe": false,
+      "category": 1,
+      "content": "1. 굽는다 2. 먹는다 3. 맛있다"
     },
     {
       "id": 2,
       "image": "https://cdn.pixabay.com/photo/2014/11/05/15/57/salmon-518032_960_720.jpg",
+      "title": "제목3",
       "nickname": "Gridy",
-      "crateAt": "2015.06.24",
+      "createAt": "2015.06.24",
       "likeCount": 0,
-      "likeByMe": false
+      "likeByMe": false,
+      "category": 1,
+      "content": "1. 굽는다 2. 먹는다 3. 맛있다"
+    },
+    {
+      "id": 3,
+      "image": "https://cdn.pixabay.com/photo/2014/11/05/15/57/salmon-518032_960_720.jpg",
+      "title": "제목3",
+      "nickname": "Gridy",
+      "createAt": "2015.06.24",
+      "likeCount": 2,
+      "likeByMe": true,
+      "category": 3,
+      "content": "1. 굽는다 2. 먹는다 3. 맛있다"
+    },
+    {
+      "id": 4,
+      "image": "https://cdn.pixabay.com/photo/2014/11/05/15/57/salmon-518032_960_720.jpg",
+      "title": "제목3",
+      "nickname": "Gridy",
+      "createAt": "2015.06.24",
+      "likeCount": 7,
+      "likeByMe": false,
+      "category": 4,
+      "content": "1. 굽는다 2. 먹는다 3. 맛있다"
+    },
+    {
+      "id": 5,
+      "image": "https://cdn.pixabay.com/photo/2014/11/05/15/57/salmon-518032_960_720.jpg",
+      "title": "제목3",
+      "nickname": "Gridy",
+      "createAt": "2015.06.24",
+      "likeCount": 8,
+      "likeByMe": true,
+      "category": 4,
+      "content": "1. 굽는다 2. 먹는다 3. 맛있다"
+    },
+    {
+      "id": 6,
+      "image": "https://cdn.pixabay.com/photo/2014/11/05/15/57/salmon-518032_960_720.jpg",
+      "title": "제목3",
+      "nickname": "Gridy",
+      "createAt": "2015.06.24",
+      "likeCount": 3,
+      "likeByMe": false,
+      "category": 4,
+      "content": "1. 굽는다 2. 먹는다 3. 맛있다"
+    },
+    {
+      "id": 7,
+      "image": "https://cdn.pixabay.com/photo/2014/11/05/15/57/salmon-518032_960_720.jpg",
+      "title": "제목3",
+      "nickname": "Gridy",
+      "createAt": "2015.06.24",
+      "likeCount": 5,
+      "likeByMe": false,
+      "category": 2,
+      "content": "1. 굽는다 2. 먹는다 3. 맛있다"
+    },
+    {
+      "image": "https://cdn.pixabay.com/photo/2014/11/05/15/57/salmon-518032_960_720.jpg",
+      "title": "테스트",
+      "content": "테스트입니다.",
+      "nickname": "gridy",
+      "likeCount": 0,
+      "likeByMe": false,
+      "category": 0,
+      "createAt": "2021.01.28",
+      "id": 8
+    }
+  ],
+  "comment": [
+    {
+      "id": 0,
+      "nickname": "닉네임1",
+      "content": "너무 마시써용",
+      "createAt": "2015.03.15",
+      "postId": 0
+    },
+    {
+      "id": 1,
+      "nickname": "닉네임2",
+      "content": "너무 마시써용",
+      "createAt": "2015.03.15",
+      "postId": 0
+    },
+    {
+      "nickname": "gridy",
+      "content": "test",
+      "createAt": "2015.03.15",
+      "postId": 1,
+      "id": 2
     }
   ]
 }
