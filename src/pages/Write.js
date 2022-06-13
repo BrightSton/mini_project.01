@@ -1,33 +1,43 @@
 import styled from "styled-components";
 import Header from "../components/Header";
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addPost } from "../redux/modules/post";
+
+import { getPostList } from "../axios/axiosPost";
 
 const Write = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const user = useSelector((state) => state.user);
+  const { isLogin, nickname, username } = useSelector((state) => state.user);
 
   const subjectRef = useRef(null);
   const contentRef = useRef(null);
 
   const addPostSubmit = (e) => {
     e.preventDefault();
-    dispatch(addPost({
-      image: "https://cdn.pixabay.com/photo/2014/11/05/15/57/salmon-518032_960_720.jpg",
-      title: subjectRef.current.value,
-      content: contentRef.current.value,
-      nickname: user.nickname,
-      likeCount: 0,
-      likeByMe: false,
-      category: 0,
-      createAt: "2021.01.28",
-    }));
+    dispatch(addPost(
+      {
+        image: "https://cdn.pixabay.com/photo/2014/11/05/15/57/salmon-518032_960_720.jpg",
+        title: subjectRef.current.value,
+        content: contentRef.current.value,
+        nickname: nickname,
+        likeCount: 0,
+        likeByMe: false,
+        category: 0,
+        createAt: "2021.01.28",
+      }
+    ));
     navigate("/");
   }
+
+  useEffect(() => {
+    if (!isLogin) {
+      navigate("/");
+    }
+  }, [isLogin]);
 
   return (
     <Container>

@@ -1,11 +1,11 @@
 import styled, { css } from "styled-components";
 import Header from "../components/Header";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import { getPostById, likePost } from "../redux/modules/post";
 import { addComment, getCommentListByPostId } from "../redux/modules/comment";
 
@@ -16,14 +16,16 @@ const Detail = () => {
   const post = useSelector((state) => state.post.post);
   const comments = useSelector((state) => state.comment.list);
   const commentsCount = useSelector((state) => state.comment.count);
-  const user = useSelector((state) => state.user);
+  const { isLogin, nickname, username } = useSelector((state) => state.user);
+
   const commentTag = useRef(null);
+  const [toggleMenu, setToggleMenu] = useState(false);
 
   const addCommentSubmit = (e) => {
     e.preventDefault();
 
     dispatch(addComment({
-      nickname: user.nickname,
+      nickname: nickname,
       content: commentTag.current.value,
       createAt: "2015.03.15",
       postId: Number(params.id)
@@ -49,6 +51,13 @@ const Detail = () => {
         <Header />
         <Content>
           <Post>
+            <PostMenuToggle onClick={() => {setToggleMenu(current => !current)}}>
+              <FontAwesomeIcon icon={faEllipsis} />
+            </PostMenuToggle>
+            <PostMenu isActive={toggleMenu}>
+              <div>수정하기</div>
+              <div>삭제하기</div>
+            </PostMenu>
             <PostImage>
               <img src={post.image} alt="" />  
             </PostImage>
@@ -67,7 +76,8 @@ const Detail = () => {
           </Post>
           <CommentBox>
             <CommentTitle>Comments<CommentCount>{commentsCount}</CommentCount></CommentTitle>
-            <CommentList>
+            {commentsCount > 0 && (
+              <CommentList>
               {comments.map((comment, index) => {
                 return (
                   <Comment key={index}>
@@ -77,11 +87,16 @@ const Detail = () => {
                   </Comment>
                 );
               })}
-            </CommentList>
-            <CommentForm onSubmit={addCommentSubmit}>
-              <FormText ref={commentTag}></FormText>
-              <FormBtn>댓글쓰기</FormBtn>
-            </CommentForm>
+              </CommentList>
+            )}
+            { isLogin ?
+              <CommentForm onSubmit={addCommentSubmit}>
+                <FormText ref={commentTag}></FormText>
+                <FormBtn>댓글쓰기</FormBtn>
+              </CommentForm>
+            :
+              <NoComment>댓글을 작성하려면 로그인을 해주세요</NoComment>
+            }
           </CommentBox>
         </Content>
       </Box>
@@ -108,6 +123,62 @@ const Post = styled.div`
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 0 6px 0 #ddd;
+  position: relative;
+`;
+
+const PostMenuToggle = styled.div`
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 20px;
+  font-size: 24px;
+  color: ${props => props.theme.color.white};
+  transition: color .3s;
+  cursor: pointer;
+
+  &:hover {
+    color: ${props => props.theme.color.heavyGrey}
+  }
+`;
+
+const PostMenu = styled.div`
+  position: absolute;
+  top: 60px;
+  right: 10px;
+  box-shadow: 0 0 6px 0 ${props => props.theme.color.heavyGrey};
+  background-color: ${({theme}) => theme.color.white};
+  ${({isActive}) => isActive ? css`
+    display: block;
+  ` : css`
+    display: none;
+  `};
+
+  &::before {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 0;
+    height: 0;
+    top: -10px;
+    right: 14px;
+    border-right: 6px solid transparent;
+    border-left: 6px solid transparent;
+    border-bottom: calc( 6px * 1.732 ) solid ${props => props.theme.color.white};
+  }
+
+  div {
+    padding: 20px 30px;
+    cursor: pointer;
+    transition: background-color .3s;
+
+    &:hover {
+      background-color: #ddd;
+    }
+  }
+
+  div + div {
+    border-top: 1px solid ${props => props.theme.color.lightGrey};
+  }
 `;
 
 const PostImage = styled.div`
@@ -214,7 +285,9 @@ const CommentDate = styled.div`
 `;
 
 const CommentForm = styled.form`
-  margin-top: 20px;
+  ${CommentList} + & {
+    margin-top: 20px;
+  }
   width: 100%;
   height: 70px;
   box-shadow: 0 0 6px 0 #ddd;
@@ -244,6 +317,19 @@ const FormBtn = styled.button`
     color: ${props => props.theme.color.blue};
     background-color: ${props => props.theme.color.black};
   }
+`;
+
+const NoComment = styled.div`
+  ${CommentList} + & {
+    margin-top: 20px;
+  }
+  width: 100%;
+  height: 100px;
+  background-color: #EEEEEE;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
 `;
 
 export default Detail;

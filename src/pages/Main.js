@@ -99,6 +99,7 @@ const Category = styled.div`
   justify-content: center;
   align-items: center;
   transition: color .3s, background-color .3s;
+  cursor: pointer;
 
   ${props => props.isActive && css`
     background-color: ${props => props.theme.color.whiteSmoke};

@@ -98,6 +98,17 @@
       "category": 0,
       "createAt": "2021.01.28",
       "id": 8
+    },
+    {
+      "image": "https://cdn.pixabay.com/photo/2014/11/05/15/57/salmon-518032_960_720.jpg",
+      "title": "ㅁㄴㅇㅁㄴ",
+      "content": "ㅁㄴㅇㄴㅁ",
+      "nickname": "gridy",
+      "likeCount": 0,
+      "likeByMe": false,
+      "category": 0,
+      "createAt": "2021.01.28",
+      "id": 9
     }
   ],
   "comment": [
@@ -121,6 +132,12 @@
       "createAt": "2015.03.15",
       "postId": 1,
       "id": 2
+    },
+    {
+      "nickname": "닉네임1",
+      "content": "너무 마시써용",
+      "createAt": "2015.03.15",
+      "postId": 0
     }
   ]
 }

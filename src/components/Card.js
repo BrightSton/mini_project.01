@@ -33,6 +33,12 @@ const Container = styled.li`
   border-radius: 10px;
   overflow: hidden;
   box-sizing: border-box;
+  transition: box-shadow .3s, transform .3s;
+
+  &:hover {
+    box-shadow: 0 0 8px 0 #aaa;
+    transform: scale(1.05);
+  }
 `;
 
 const CardImage = styled.div`
