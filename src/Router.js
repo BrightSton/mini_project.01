@@ -5,6 +5,7 @@ import Register from "./pages/Register";
 import Detail from "./pages/Detail";
 import Write from "./pages/Write";
 import Main from "./pages/Main";
+import Test from "./pages/Test";
 
 function Router() {
   return (
@@ -15,6 +16,7 @@ function Router() {
         <Route path='/post/:id' element={<Detail />} />
         <Route path='/write/:id' element={<Write />} />
         <Route path='/write' element={<Write />} />
+        <Route path='/test' element={<Test />} />
         <Route path='/' element={<Main />} />
         <Route path='*' element={<NotFound />} />
       </Routes>

@@ -2,17 +2,19 @@ import styled, { css } from "styled-components";
 import Header from "../components/Header";
 import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faEllipsis } from "@fortawesome/free-solid-svg-icons";
-import { getPostById, likePost } from "../redux/modules/post";
+import { getPostById, likePost, removePost } from "../redux/modules/post";
 import { addComment, getCommentListByPostId } from "../redux/modules/comment";
+import { axiosComment, axiosPost } from "../axios/axiosData";
 
 
 const Detail = () => {
   const params = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const post = useSelector((state) => state.post.post);
   const comments = useSelector((state) => state.comment.list);
   const commentsCount = useSelector((state) => state.comment.count);
@@ -55,8 +57,16 @@ const Detail = () => {
               <FontAwesomeIcon icon={faEllipsis} />
             </PostMenuToggle>
             <PostMenu isActive={toggleMenu}>
-              <div>수정하기</div>
-              <div>삭제하기</div>
+              <div onClick={
+                () => {
+                  navigate(`/write/${Number(params.id)}`);
+                }
+              }>수정하기</div>
+              <div onClick={
+                () => {
+                  dispatch(removePost(Number(params.id)));
+                }
+              }>삭제하기</div>
             </PostMenu>
             <PostImage>
               <img src={post.image} alt="" />  

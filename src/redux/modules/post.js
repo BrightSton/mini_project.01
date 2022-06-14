@@ -20,14 +20,14 @@ export const getPostListByCategory = (categoryId) => {
 
 export const getPostById = (postId) => {
   return async function (dispatch) {
-    const lists = await axios.get(`${addr}/posts/${postId}`);
+    const lists = await axios.get(`http://localhost:5001/posts/${postId}`);
     dispatch(setPostRedux(lists.data));
   }
 };
 
 export const addPost = (data) => {
   return async function (dispatch) {
-    const response = await axios.post(`${addr}/posts`, data);
+    const response = await axios.post(`${addr}/posts`, {data});
     dispatch(addPostRedux(response.data));
   }
 };
@@ -40,6 +40,13 @@ export const likePost = (data) => {
       const response = await axios.patch(`${addr}/posts/${data.postId}`, {likeByMe: true, likeCount: data.likeCount + 1});
     }
     dispatch(likePostRedux(data.postId));
+  }
+}
+
+export const removePost = (id) => {
+  return async function (dispatch) {
+    const response = await axios.remove(`${addr}/posts/${id}`);
+    
   }
 }
 
@@ -73,6 +80,12 @@ const postSlice = createSlice({
         state.post.likeCount = state.post.likeCount + 1;
       }
     },
+
+    removePostRedux: (state, action) => {
+      state.post = state.post.filter((post) => {
+        return post.id !== action.payload;
+      });
+    }
   }
 });
 

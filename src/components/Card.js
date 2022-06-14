@@ -6,9 +6,9 @@ import { Link } from "react-router-dom";
 const Card = ({ post }) => {
   return (
     <Container>
-      <Link to={`/post/${post.id}`}>
+      <Link to={`/post/${post.postId}`}>
         <CardImage>
-          <img src={post.image} alt="" />
+          <img src={post.imageUrl} alt="" />
         </CardImage>
         <CardContent>
           <CardLeft>

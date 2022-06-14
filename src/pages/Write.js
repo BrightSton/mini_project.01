@@ -2,14 +2,15 @@ import styled from "styled-components";
 import Header from "../components/Header";
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { addPost } from "../redux/modules/post";
 
-import { getPostList } from "../axios/axiosPost";
+// import { getPostList } from "../axios/axiosPost";
 
 const Write = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const params = useParams();
 
   const { isLogin, nickname, username } = useSelector((state) => state.user);
 
@@ -32,6 +33,10 @@ const Write = () => {
     ));
     navigate("/");
   }
+
+  useEffect(() => {
+    console.log();
+  }, []);
 
   useEffect(() => {
     if (!isLogin) {
