@@ -1,12 +1,21 @@
-import { createGlobalStyle, ThemeProvider } from 'styled-components';
-import Router from './Router';
-import { defaultTheme } from './styles/theme';
-import common from './styles/common.css';
-import { Provider } from 'react-redux';
-import store from './redux/configStore';
+import { createGlobalStyle, ThemeProvider } from "styled-components";
+import Router from "./Router";
+import { defaultTheme } from "./styles/theme";
+import common from "./styles/common.css";
+import { Provider, useDispatch } from "react-redux";
+import store from "./redux/configStore";
+import React from "react";
+import { loadUserDB } from "./redux/modules/user";
 
 function App() {
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(loadUserDB());
+  }, [dispatch]);
+
   const theme = defaultTheme;
+
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
@@ -21,8 +30,8 @@ const GlobalStyle = createGlobalStyle`
 ${common}; // Reset CSS
 
 body, button, input, textarea {
-  color: ${props => props.theme.color.black};
-  font-family: ${props => props.theme.fontFamily.default}, sans-serif;
+  color: ${(props) => props.theme.color.black};
+  font-family: ${(props) => props.theme.fontFamily.default}, sans-serif;
 }
 
 a {

@@ -68,27 +68,33 @@ const textMap = {
 
 //회원가입, 로그인 페이지의 레이아웃
 
-const AuthForm = ({ type }) => {
+const AuthForm = ({ type, form, onChange, onSubmit }) => {
   // 하나의 컴포넌트로 로그인, 회원가입을 띄우기 위해 type이라는 props 설정.
   const text = textMap[type];
   return (
     <AuthFormBlock>
       <BoxArea>{text}</BoxArea>
-      <form>
+      {/* form onSubmit */}
+      <form onSubmit={onSubmit}>
         {/* autocomplete 속성 >> 인풋에 자동완성하는 속성 
        username 은 사용자 이름 , new-password 는 보통 비밀번호 자동완성 막기 위해서
         새로운 비밀번호나 비밀번호 확인란에 들어간다고 함. 
+        input onChange, value
         */}
         <StyledInput
           autoComplete="username"
           name="username"
           placeholder="아이디"
+          onChange={onChange}
+          value={form.username}
         />
         <StyledInput
           autoComplete="new-password"
           name="password"
           placeholder="비밀번호"
           type="password"
+          onChange={onChange}
+          value={form.password}
         />
         {/* type 이 회원가입이면, 비밀번호 확인 인풋 추가 */}
         {type === "register" && (
@@ -97,6 +103,8 @@ const AuthForm = ({ type }) => {
             name="passwordConfirm"
             placeholder="비밀번호 확인"
             type="password"
+            onChange={onChange}
+            value={form.passwordConfirm}
           />
         )}
         <ButtonWithMarginTop fullWidth>{text}</ButtonWithMarginTop>
