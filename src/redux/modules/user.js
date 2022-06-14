@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 
 const userSlice = createSlice({
-  name: "post",
+  name: "user",
   initialState: {
+    isLogin: false,
     username: "reality023",
     nickname: "gridy"
   },
