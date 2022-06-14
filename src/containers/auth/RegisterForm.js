@@ -45,8 +45,7 @@ const RegisterForm = () => {
   );
 };
 
-export default RegisterForm;
- */
+export default RegisterForm; */
 
 import React from "react";
 import axios from "axios";

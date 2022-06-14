@@ -45,24 +45,36 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
- */
+export default LoginForm; */
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import user, { loadUserDB } from "../../redux/modules/user";
 
 const LoginForm = () => {
   const id_ref = React.useRef(null);
   const pw_ref = React.useRef(null);
 
-  const callLogin = () => {
-    let data = {
-      _id: id_ref.current.value,
-      pw: pw_ref.current.value,
-    };
+  const dispatch = useDispatch();
 
-    axios.post("http://localhost:5001/login", data).then((response) => {
-      console.log(response);
+  const [is_login, setIs_login] = useState(false);
+
+  const user_list = useSelector((state) => state.user);
+  console.log(user_list);
+
+  const callLogin = () => {
+    let users = {
+      username: id_ref.current.value,
+      password: pw_ref.current.value,
+    };
+    //console.log(users);
+    dispatch(loadUserDB(users));
+  };
+
+  const callLogout = () => {
+    axios.get("http://localhost:5001/signup/1").then((response) => {
+      localStorage.removeItem("nickname");
     });
   };
 
@@ -70,7 +82,15 @@ const LoginForm = () => {
     <div>
       아이디 : <input ref={id_ref} /> <br />
       비번 : <input ref={pw_ref} /> <br />
-      <button onClick={callLogin}>로그인</button>
+      <button
+        onClick={() => {
+          callLogin();
+          console.log("이 지점");
+        }}
+      >
+        로그인
+      </button>
+      <button onClick={callLogout}>로그아웃</button>
     </div>
   );
 };
