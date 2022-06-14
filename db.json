@@ -1,4 +1,41 @@
 {
+  "login": [
+    {
+      "id": 0,
+      "_id": "asdasd",
+      "pw": "123123"
+    },
+    {
+      "_id": "id_ref",
+      "pw": "pw_ref",
+      "id": 1
+    },
+    {
+      "_id": "asdasdasd",
+      "pw": "123123",
+      "id": 2
+    }
+  ],
+  "signup": [
+    {
+      "id": 0,
+      "_id": "asdasd",
+      "pw": "123123",
+      "nickname": "Gridy"
+    },
+    {
+      "_id": "asdasd",
+      "pw": "123123",
+      "nickname": "nick",
+      "id": 1
+    },
+    {
+      "_id": "asdasd",
+      "pw": "123123",
+      "nickname": "nick",
+      "id": 2
+    }
+  ],
   "posts": [
     {
       "id": 0,
