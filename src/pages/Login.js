@@ -5,7 +5,7 @@ import AuthTemplate from "../components/auth/AuthTemplate";
 
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { loginUserDB } from "../redux/modules/user";
+import { loadUserDB } from "../redux/modules/user";
 
 const Login = () => {
   const id_ref = React.useRef(null);
@@ -19,7 +19,7 @@ const Login = () => {
       password: pw_ref.current.value,
     };
     console.log(users);
-    dispatch(loginUserDB(users));
+    dispatch(loadUserDB(users));
   };
 
   const callLogout = () => {

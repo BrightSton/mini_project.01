@@ -16,14 +16,14 @@ export const signupUserDB = (data) => {
 };
 
 // 로그인 창.
-export const loginUserDB = (users) => {
+export const loadUserDB = (users) => {
   return async function (dispatch) {
     await axios
       .post(`${addr}/login`, users)
       /*     console.log(userLists);
     dispatch(loadUser(users)); */
       .then((response) => {
-        dispatch(loginUser(users));
+        dispatch(loadUser(users));
         console.log(response);
         //window.location.replace("/");
       })
@@ -45,7 +45,7 @@ const userSlice = createSlice({
   },
   // 지금은 고정값이 true로 박히는데, 로그인했을 때 true, 로그아웃했을 때 false로 바뀌도록 코드를 짜라.
   reducers: {
-    loginUser: (state, action) => {
+    loadUser: (state, action) => {
       state.userList.push(action.payload);
       state.isLogin = true;
     },
@@ -55,5 +55,5 @@ const userSlice = createSlice({
   },
 });
 
-const { loginUser, signupUser } = userSlice.actions;
+const { loadUser, signupUser } = userSlice.actions;
 export default userSlice.reducer;

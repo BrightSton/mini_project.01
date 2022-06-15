@@ -5,17 +5,25 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { getPostList, getPostListByCategory } from "../redux/modules/post";
 import Card from "../components/Card";
+import axios from "axios";
+
+import { axiosPost } from "../axios/axiosData";
 
 const Main = () => {
   const dispatch = useDispatch();
-  const posts = useSelector(state => state.post.list);
-  const [activeCategory, setActiveCategory] = useState(0);
+  // const posts = useSelector(state => state.post.list);
+  const [postList, setPostList] = useState([]);
+  const [activeCategory, setActiveCategory] = useState("ALL");
 
   useEffect(() => {
-    if (activeCategory === 0) {
-      dispatch(getPostList());
+    if (activeCategory === "ALL") {
+      axiosPost.getPost().then((response) => {
+        setPostList(response.data);
+      }, []);
     } else {
-      dispatch(getPostListByCategory(activeCategory));
+      axiosPost.getPostListByCategory(activeCategory).then((response) => {
+        setPostList(response.data);
+      }, []);
     }
   }, [activeCategory]);
 
@@ -26,18 +34,29 @@ const Main = () => {
         <Content>
           <TopView>
             <Categories>
-              {/* 5가지 카테고리 반복 생성 */}
-              {["전체", "한식", "중식", "양식", "일식"].map((value, index) => {
-                  return (<Category key={index} isActive={activeCategory === index} onClick={() => {setActiveCategory(index)}}>{value}</Category>)
+              {/* 5가지 카테고리 반복 생성 k 한식 c 중식 a 양식 j 일식 */}
+              {
+              [
+                {name:"전체", type: "ALL"},
+                {name: "한식", type: "k"},
+                {name: "중식", type: "c"},
+                {name: "양식", type: "a"},
+                {name: "일식", type: "j"}
+              ].map((value, index) => {
+                  return (
+                    <Category 
+                      key={index} 
+                      isActive={activeCategory === value.type} 
+                      onClick={() => {setActiveCategory(value.type)}}>{value.name}
+                    </Category>
+                  );
               })}
             </Categories>
             <Link to="/write"><Button>추가하기</Button></Link>
           </TopView>
           <CardList>
-            {posts.map((post, index) => {
-              return (
-                <Card key={index} post={post}></Card>
-              )
+            {postList.map((post, index) => {
+              return (<Card key={index} post={post} />)
             })}
           </CardList>
         </Content>
