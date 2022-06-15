@@ -1,31 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-
-const addr = "http://localhost:5001";
-
-//회원가입 창.
-export const signupUserDB = (data) => {
-  return function (dispatch) {
-    axios.post(`${addr}/signup`, data).then((response) => {
-      dispatch(signupUser(data));
-      console.log(response);
-      //window.alert("회원가입 완료!");
-      //window.location.replace("/login");
-    });
-  };
-};
+import instance from "../../components/auth/Instance";
 
 // 로그인 창.
 export const loadUserDB = (users) => {
   return async function (dispatch) {
     await axios
-      .post(`${addr}/login`, users)
+      .post("http://13.125.4.231/user/login", users)
       /*     console.log(userLists);
     dispatch(loadUser(users)); */
       .then((response) => {
-        dispatch(loadUser(users));
         console.log(response);
-        //window.location.replace("/");
+        const accessToken = response.data.token;
+        localStorage.setItem("token", accessToken);
+        if (accessToken) {
+          dispatch(loadUser(true));
+          console.log(response, "로그인");
+          window.location.replace("/");
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -33,23 +25,36 @@ export const loadUserDB = (users) => {
   };
 };
 
+// 유저정보 확인
+export const loginCheckDB = () => {
+  return function (dispatch) {
+    instance.get("/user/check").then((response) =>
+      dispatch(
+        loginCheck({
+          username: response.data.username,
+        })
+      )
+    );
+  };
+};
+
 //Reducer
 const userSlice = createSlice({
   name: "user",
   initialState: {
-    isLogin: true,
+    isLogin: false,
   },
   // 지금은 고정값이 true로 박히는데, 로그인했을 때 true, 로그아웃했을 때 false로 바뀌도록 코드를 짜라.
   reducers: {
     loadUser: (state, action) => {
-      state.userList.push(action.payload);
-      state.isLogin = true;
+      state.isLogin = action.payload;
     },
-    signupUser: (state, action) => {
+
+    loginCheck: (state, action) => {
       state = action.payload;
     },
   },
 });
 
-const { loadUser, signupUser } = userSlice.actions;
+export const { loadUser, loginCheck } = userSlice.actions;
 export default userSlice.reducer;

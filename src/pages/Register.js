@@ -3,25 +3,32 @@ import AuthForm from "../components/auth/AuthForm";
 import AuthTemplate from "../components/auth/AuthTemplate";
 //import RegisterForm from "../containers/auth/RegisterForm";
 import { useDispatch } from "react-redux";
-import users, { signupUserDB } from "../redux/modules/user";
+import axios from "axios";
 
 const Register = () => {
   const id_ref = React.useRef(null);
   const nickName = React.useRef(null);
   const pw_ref = React.useRef(null);
-  const pwCheck_ref = React.useRef(null);
 
   const dispatch = useDispatch();
+
   const callSingup = () => {
     let data = {
       username: id_ref.current.value,
       nickname: nickName.current.value,
       password: pw_ref.current.value,
-      pwCheck: pwCheck_ref.current.value,
+
       isLogin: false,
     };
     console.log(data);
-    dispatch(signupUserDB(data));
+    axios
+      .post("http://13.125.4.231/user/signup", data)
+      .then((response) => {
+        console.log(response, "회원가입");
+        window.alert("회원가입 완료!");
+        //window.location.replace("/login");
+      })
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -30,7 +37,6 @@ const Register = () => {
         아이디 : <input ref={id_ref} /> <br />
         닉네임: <input ref={nickName} /> <br />
         비번 : <input ref={pw_ref} /> <br />
-        비번 확인 : <input ref={pwCheck_ref} /> <br />
         <button onClick={callSingup}>회원가입</button>
       </div>
     </AuthTemplate>

@@ -2,13 +2,20 @@ import { createGlobalStyle, ThemeProvider } from "styled-components";
 import Router from "./Router";
 import { defaultTheme } from "./styles/theme";
 import common from "./styles/common.css";
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import store from "./redux/configStore";
-import React from "react";
+import React, { useEffect } from "react";
+import { loadUser } from "./redux/modules/user";
 
 function App() {
   const theme = defaultTheme;
-
+  const dispatch = useDispatch();
+  useEffect(() => {
+    console.log(localStorage.getItem("token"));
+    if (localStorage.getItem("token") !== null) {
+      dispatch(loadUser(true));
+    }
+  });
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>

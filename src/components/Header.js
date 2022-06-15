@@ -1,18 +1,47 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const Header = () => {
+  const user = useSelector((state) => state.user);
+  const [isLogin, setIsLogin] = useState(false);
+
+  const deleteToken = () => {
+    localStorage.removeItem("token");
+    setIsLogin(false);
+    window.location.reload();
+  };
+
+  useEffect(() => {
+    if (user.isLogin) {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
+  }, [user]);
+
   return (
     <Container>
-      <h1><Link to="/">Food Recipe</Link></h1>
+      <h1>
+        <Link to="/">Food Recipe</Link>
+      </h1>
       <nav>
         <ul>
-          <li><Link to="/login">로그인</Link></li>
+          {isLogin ? (
+            <li>
+              <button onClick={deleteToken}>로그아웃</button>
+            </li>
+          ) : (
+            <li>
+              <Link to="/login">로그인</Link>
+            </li>
+          )}
         </ul>
       </nav>
     </Container>
   );
-}
+};
 
 const Container = styled.div`
   display: flex;
@@ -21,12 +50,12 @@ const Container = styled.div`
 
   h1 {
     font-size: 48px;
-    transition: color .3s;
+    transition: color 0.3s;
     cursor: pointer;
   }
 
   h1:hover {
-    color: ${props => props.theme.color.heavyGrey};
+    color: ${(props) => props.theme.color.heavyGrey};
   }
 
   nav {
@@ -36,13 +65,13 @@ const Container = styled.div`
     a {
       padding: 20px 30px;
       border-radius: 10px;
-      background-color: ${props => props.theme.color.blue};
-      color: ${props => props.theme.color.white};
-      transition: color .3s, background-color .3s;
+      background-color: ${(props) => props.theme.color.blue};
+      color: ${(props) => props.theme.color.white};
+      transition: color 0.3s, background-color 0.3s;
     }
 
     a:hover {
-      background-color: ${props => props.theme.hoverColor.blue};
+      background-color: ${(props) => props.theme.hoverColor.blue};
     }
   }
 `;

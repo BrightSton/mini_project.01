@@ -1,4 +1,51 @@
 {
+  "login": [
+    {
+      "id": 0,
+      "username": "asdasd",
+      "password": "123123"
+    }
+  ],
+  "signup": [
+    {
+      "id": 0,
+      "username": "asdasd",
+      "password": "123123",
+      "nickname": "psb"
+    },
+    {
+      "username": "admin",
+      "nickname": "nick",
+      "password": "123123",
+      "pwCheck": "123123",
+      "isLogin": false,
+      "id": 1
+    },
+    {
+      "username": "asdasd",
+      "nickname": "nick",
+      "password": "123123",
+      "pwCheck": "123123",
+      "isLogin": false,
+      "id": 2
+    },
+    {
+      "username": "",
+      "nickname": "",
+      "password": "",
+      "pwCheck": "",
+      "isLogin": false,
+      "id": 3
+    },
+    {
+      "username": "",
+      "nickname": "",
+      "password": "",
+      "pwCheck": "",
+      "isLogin": false,
+      "id": 4
+    }
+  ],
   "posts": [
     {
       "id": 0,
