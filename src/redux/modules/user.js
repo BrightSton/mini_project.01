@@ -37,11 +37,7 @@ export const loadUserDB = (users) => {
 const userSlice = createSlice({
   name: "user",
   initialState: {
-    isLogin: false,
-    userList: [],
-    /* username: "reality023",
-    password: "123123",
-    nickname: "gridy", */
+    isLogin: true,
   },
   // 지금은 고정값이 true로 박히는데, 로그인했을 때 true, 로그아웃했을 때 false로 바뀌도록 코드를 짜라.
   reducers: {

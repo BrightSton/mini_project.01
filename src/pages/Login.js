@@ -6,7 +6,6 @@ import AuthTemplate from "../components/auth/AuthTemplate";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { loadUserDB } from "../redux/modules/user";
-
 const Login = () => {
   const id_ref = React.useRef(null);
   const pw_ref = React.useRef(null);

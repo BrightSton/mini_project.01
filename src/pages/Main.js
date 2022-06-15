@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { getPostList, getPostListByCategory } from "../redux/modules/post";
 import Card from "../components/Card";
 import axios from "axios";
 
@@ -42,15 +41,18 @@ const Main = () => {
                 {name: "중식", type: "c"},
                 {name: "양식", type: "a"},
                 {name: "일식", type: "j"}
-              ].map((value, index) => {
+              ].map(
+                (value, index) => {
                   return (
                     <Category 
                       key={index} 
                       isActive={activeCategory === value.type} 
-                      onClick={() => {setActiveCategory(value.type)}}>{value.name}
+                      onClick={() => {setActiveCategory(value.type)}}>
+                      {value.name}
                     </Category>
                   );
-              })}
+                }
+              )}
             </Categories>
             <Link to="/write"><Button>추가하기</Button></Link>
           </TopView>

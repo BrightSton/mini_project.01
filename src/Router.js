@@ -5,7 +5,6 @@ import Register from "./pages/Register";
 import Detail from "./pages/Detail";
 import Write from "./pages/Write";
 import Main from "./pages/Main";
-import Test from "./pages/Test";
 
 function Router() {
   return (

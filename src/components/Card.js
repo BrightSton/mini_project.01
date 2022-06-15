@@ -14,7 +14,7 @@ const Card = ({ post }) => {
           <CardLeft>
             <CardSubject>{post.title}</CardSubject>
             <CardAuthor>{post.nickname}</CardAuthor>
-            <CardDate>{post.createAt}</CardDate>
+            <CardDate>{post.createdAt.substring(0,10)}</CardDate>
           </CardLeft>
           <CardRight>
             <CardLike isActive={post.likeByMe}><FontAwesomeIcon icon={faHeart} /></CardLike>
