@@ -2,18 +2,11 @@ import { createGlobalStyle, ThemeProvider } from "styled-components";
 import Router from "./Router";
 import { defaultTheme } from "./styles/theme";
 import common from "./styles/common.css";
-import { Provider, useDispatch } from "react-redux";
+import { Provider } from "react-redux";
 import store from "./redux/configStore";
 import React from "react";
-import { loadUserDB } from "./redux/modules/user";
 
 function App() {
-  const dispatch = useDispatch();
-
-  React.useEffect(() => {
-    dispatch(loadUserDB());
-  }, [dispatch]);
-
   const theme = defaultTheme;
 
   return (

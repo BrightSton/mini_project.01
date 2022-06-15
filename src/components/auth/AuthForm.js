@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import Button from "../common/Button";
+import Button from "../Button";
 
 //로그인과 회원가입 폼을 보여줌.
 
@@ -98,15 +98,24 @@ const AuthForm = ({ type, form, onChange, onSubmit }) => {
         />
         {/* type 이 회원가입이면, 비밀번호 확인 인풋 추가 */}
         {type === "register" && (
-          <StyledInput
-            autoComplete="new-password"
-            name="passwordConfirm"
-            placeholder="비밀번호 확인"
-            type="password"
-            onChange={onChange}
-            value={form.passwordConfirm}
-          />
-        )}
+            <StyledInput
+              autoComplete="new-password"
+              name="passwordConfirm"
+              placeholder="비밀번호 확인"
+              type="password"
+              onChange={onChange}
+              value={form.passwordConfirm}
+            />
+          ) && (
+            <StyledInput
+              autoComplete="nickname"
+              name="nickname"
+              placeholder="닉네임 적어주세요"
+              type="nickname"
+              onChange={onChange}
+              value={form.passwordConfirm}
+            />
+          )}
         <ButtonWithMarginTop fullWidth>{text}</ButtonWithMarginTop>
       </form>
       <Footer>
