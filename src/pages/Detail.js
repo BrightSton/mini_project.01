@@ -6,18 +6,16 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faEllipsis } from "@fortawesome/free-solid-svg-icons";
-import { getPostById, likePost, removePost } from "../redux/modules/post";
-import { addComment, getCommentListByPostId } from "../redux/modules/comment";
 import { axiosComment, axiosPost } from "../axios/axiosData";
+import axios from "axios";
 
 
 const Detail = () => {
   const params = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const post = useSelector((state) => state.post.post);
-  const comments = useSelector((state) => state.comment.list);
-  const commentsCount = useSelector((state) => state.comment.count);
+  const [post, setPost] = useState([]);
+  const [commentList, setCommentList] = useState([]);
   const { isLogin, nickname, username } = useSelector((state) => state.user);
 
   const commentTag = useRef(null);
@@ -26,25 +24,42 @@ const Detail = () => {
   const addCommentSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(addComment({
-      nickname: nickname,
+    axiosComment.addComment({
+      username: "test", // username
       content: commentTag.current.value,
-      createAt: "2015.03.15",
       postId: Number(params.id)
-    }));
+    }).then((response) => {
+      axiosComment.getCommentListByPostId(Number(params.id)).then((response) => {
+        setCommentList(response.data);
+      });
+    });
   }
 
   const likeClick = (e) => {
-    dispatch(likePost({
-      postId: Number(params.id),
-      likeCount: post.likeCount,
-      likeByMe: post.likeByMe
-    }));
+    axiosPost.likePost(Number(params.id), {
+      username: "test",
+      postNum: Number(params.id),
+      action: post.likeByMe ? "unlike" : "like"
+    }).then((response) => {
+      setPost((current) => {
+        const arr = {...current};
+        arr.likeByMe = post.likeByMe ? false : true;
+        arr.likeCount = post.likeByMe ? arr.likeCount - 1 : arr.likeCount + 1;
+        return arr;
+      });
+    });
   }
 
   useEffect(() => {
-    dispatch(getPostById(Number(params.id)));
-    dispatch(getCommentListByPostId(Number(params.id)));
+
+    axiosPost.getPostById(Number(params.id)).then((response) => {
+      setPost(response.data);
+    });
+
+    axiosComment.getCommentListByPostId(Number(params.id)).then((response) => {
+      setCommentList(response.data);
+    });
+
   }, []);
 
   return (
@@ -64,15 +79,17 @@ const Detail = () => {
               }>수정하기</div>
               <div onClick={
                 () => {
-                  dispatch(removePost(Number(params.id)));
+                  axiosPost.deletePost(Number(params.id)).then((response) => {
+                    navigate('/');
+                  });
                 }
               }>삭제하기</div>
             </PostMenu>
             <PostImage>
-              <img src={post.image} alt="" />  
+              <img src={post.imageUrl} alt="" />  
             </PostImage>
             <PostHeader>
-              <PostDate>{post.createAt}</PostDate>
+              <PostDate>{post.createdAt?.substring(0, 10)}</PostDate>
               <PostSubject>{post.title}</PostSubject>
               <PostAuthorName>{post.nickname}</PostAuthorName>
             </PostHeader>
@@ -85,15 +102,15 @@ const Detail = () => {
             </PostContent>
           </Post>
           <CommentBox>
-            <CommentTitle>Comments<CommentCount>{commentsCount}</CommentCount></CommentTitle>
-            {commentsCount > 0 && (
+            <CommentTitle>Comments<CommentCount>{commentList.length}</CommentCount></CommentTitle>
+            {commentList.length > 0 && (
               <CommentList>
-              {comments.map((comment, index) => {
+              {commentList.map((comment, index) => {
                 return (
                   <Comment key={index}>
                       <CommentName>{comment.nickname}</CommentName>
                       <CommentText>{comment.content}</CommentText>
-                      <CommentDate>{comment.createAt}</CommentDate>
+                      <CommentDate>{comment.createAt?.substring(0,10)}</CommentDate>
                   </Comment>
                 );
               })}
@@ -270,7 +287,7 @@ const CommentList = styled.ul`
   gap: 20px;
 `;
 
-const Comment = styled.li`
+const Comment = styled.li`1
   width: 100%;
   min-height: 60px;
   box-shadow: 0 0 6px 0 #ddd;
@@ -290,7 +307,7 @@ const CommentText = styled.pre`
 `;
 
 const CommentDate = styled.div`
-  width: 100px;
+  width: 120px;
   color: ${props => props.theme.color.heavyGrey};
 `;
 

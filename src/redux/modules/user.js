@@ -15,7 +15,7 @@ export const loadUserDB = (users) => {
 const userSlice = createSlice({
   name: "user",
   initialState: {
-    isLogin: false,
+    isLogin: true,
   },
   reducers: {
     loadUser: (state, action) => {
