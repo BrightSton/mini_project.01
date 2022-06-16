@@ -17,6 +17,7 @@ const Detail = () => {
   const [post, setPost] = useState([]);
   const [commentList, setCommentList] = useState([]);
   const { isLogin } = useSelector((state) => state.user);
+  const [myPost, setMyPost] = useState(false);
 
   const commentTag = useRef(null);
   const [toggleMenu, setToggleMenu] = useState(false);
@@ -52,7 +53,16 @@ const Detail = () => {
       console.log(response);
       setCommentList(response.data);
     });
+
   }, []);
+
+  useEffect(() => {
+    if (post) {
+      if (localStorage.getItem("username") === post.username) {
+        setMyPost(true);
+      }
+    }
+  }, [post]);
 
   return (
     <Container>
@@ -60,9 +70,11 @@ const Detail = () => {
         <Header />
         <Content>
           <Post>
-            <PostMenuToggle onClick={() => {setToggleMenu(current => !current)}}>
+            {
+            myPost && <PostMenuToggle onClick={() => {setToggleMenu(current => !current)}}>
               <FontAwesomeIcon icon={faEllipsis} />
             </PostMenuToggle>
+            }
             <PostMenu isActive={toggleMenu}>
               <div onClick={
                 () => {

@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { axiosPost } from "../axios/axiosData";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 // import { getPostList } from "../axios/axiosPost";
 
@@ -111,8 +113,12 @@ const Write = () => {
             </Categories>
             <Image>
               <img id="previewImage" src="" alt="" />
-              <label htmlFor="imageFile"></label>
-              <input id="imageFile" type="file" accept="image/*" onChange={selectFile} ref={imageRef} />
+              { mode === ADD && (
+                <>
+                  <label htmlFor="imageFile"><FontAwesomeIcon icon={faPlus} /></label>
+                  <input id="imageFile" type="file" accept="image/*" onChange={selectFile} ref={imageRef} />
+                </>
+              )}
             </Image>
             <Text>
               <textarea placeholder="내용을 입력해주세요" ref={contentRef}></textarea>
@@ -126,7 +132,6 @@ const Write = () => {
     </Container>
   );
 }
-
 const Container = styled.div`
   display: flex;
   justify-content: center;
@@ -184,14 +189,26 @@ const Image = styled.div`
 
   label {
     position: absolute;
-    display: block;
+    display: flex;
     top: 0;
     width: 100%;
     height: 800px;
     background-color: #EEEEEE;
     box-shadow: 0 0 6px 0 #ddd;
     border-radius: 10px;
+    font-size: 36px;
     opacity: 0;
+    justify-content: center;
+    align-items: center;
+    color: #bbb;
+    cursor: pointer;
+    transition: color .3s, background-color .3s, opacity .3s;
+
+    &:hover {
+      background-color: #CCCCCC;
+      color: ${props => props.theme.hoverColor.blue}
+    }
+
   }
 
   input {
