@@ -4,6 +4,7 @@ import AuthTemplate from "../components/auth/AuthTemplate";
 //import RegisterForm from "../containers/auth/RegisterForm";
 import { useDispatch } from "react-redux";
 import axios from "axios";
+import { axiosUser } from "../axios/axiosData";
 
 const Register = () => {
   const id_ref = React.useRef(null);
@@ -16,11 +17,9 @@ const Register = () => {
       nickname: nickName.current.value,
       password: pw_ref.current.value,
     };
-    console.log(data);
-    axios
-      .post("http://13.125.4.231/user/signup", data)
-      .then((response) => {
-        console.log(response, "회원가입");
+
+    axiosUser.register(data)
+    .then((response) => {
         window.alert("회원가입 완료!");
         window.location.replace("/login");
       })

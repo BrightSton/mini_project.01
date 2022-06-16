@@ -13,7 +13,7 @@ const Write = () => {
   const navigate = useNavigate();
   const params = useParams();
 
-  const { isLogin, nickname, username } = useSelector((state) => state.user);
+  const { isLogin } = useSelector((state) => state.user);
 
   const subjectRef = useRef(null);
   const contentRef = useRef(null);
@@ -30,7 +30,6 @@ const Write = () => {
     const formData = new FormData();
 
     if (mode === ADD) {
-      formData.append("username", "test");
       formData.append("category", activeCategory);
       formData.append("image", imageRef.current.files[0]);
     }
@@ -38,30 +37,15 @@ const Write = () => {
     formData.append("title", subjectRef.current.value);
     formData.append("content", contentRef.current.value);
 
-    const addr = "http://13.125.4.231";
     if (mode === ADD) {
-      axios.post(
-        `${addr}/api/posts`,
-        formData,
-        {
-          "Content-Type": "multipart/form-data",
-        }
-      ).then(
+      axiosPost.addPost(formData).then(
         (response) => {
-          console.log(response);
           navigate("/");
         }
-      );
+      ).catch((err) => console.log(err));
     } else {
-      axios.put(
-        `${addr}/api/posts/${params.id}`,
-        formData,
-        {
-          "Content-Type": "multipart/form-data",
-        }
-      ).then(
+      axiosPost.modifyPost(Number(params.id), formData).then(
         (response) => {
-          console.log(response);
           navigate("/");
         }
       );
