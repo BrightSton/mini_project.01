@@ -12,6 +12,7 @@ const color = {
 
 const hoverColor = {
     blue: "#1f5c94",
+    red: "#af164a",
 }
 
 const fontFamily = {

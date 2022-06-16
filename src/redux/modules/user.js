@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// 로그인 창.
+// 로그인 창
 export const loadUserDB = (users) => {
   return async function (dispatch) {
     await axios
@@ -31,7 +31,6 @@ const userSlice = createSlice({
   initialState: {
     isLogin: false,
   },
-  // 지금은 고정값이 true로 박히는데, 로그인했을 때 true, 로그아웃했을 때 false로 바뀌도록 코드를 짜라.
   reducers: {
     loadUser: (state, action) => {
       state.isLogin = action.payload;

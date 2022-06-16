@@ -1,16 +1,12 @@
 import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
-import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import Card from "../components/Card";
-import axios from "axios";
 
 import { axiosPost } from "../axios/axiosData";
 
 const Main = () => {
-  const dispatch = useDispatch();
-  // const posts = useSelector(state => state.post.list);
   const [postList, setPostList] = useState([]);
   const [activeCategory, setActiveCategory] = useState("ALL");
 

@@ -1,6 +1,7 @@
 import React from "react";
 import AuthTemplate from "../components/auth/AuthTemplate";
 import axios from "axios";
+
 import styled from "styled-components";
 import Button from "../components/Button";
 import { Link } from "react-router-dom";
