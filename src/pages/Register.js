@@ -81,21 +81,25 @@ const AuthFormBlock = styled.div`
 
 //button margin
 const ButtonWithMarginTop = styled(Button)`
-  margin-top: 1rem;
+  margin-top: 1.5rem;
+  border-radius: 10px;
+  fonst-size: 36px;
+  width: 100%;
+  height: 5rem;
 `;
 
 //styled input
 
 const StyledInput = styled.input`
-font-size:1rem;
+font-size: 25px;
 border:none;
 border-bottom: 1px solid #444;
-padding-bottom: 0.5rem;
+padding-bottom: 1rem;
 outline:none;
 width: 100%
     &:focus{
         color: $oc-teal-7;
-        border-bottom:1px solid #444;
+        border-bottom: 1px solid #444;
     }
     &+&{
         margin-top:1rem;

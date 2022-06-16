@@ -9,17 +9,18 @@ import image from "./로그인표지.jpeg";
 
 const AuthTemplateBlock = styled.div`
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  right: 0;
+  max-width: 500rem;
+  width: 100%;
+  max-height: 500rem;
+  height: 100%;
   background-image: linear-gradient(
       rgba(0.2, 0.2, 0.2, 0.2),
       rgba(0, 0, 0, 0.7)
     ),
     url(${image});
   background-blend-mode: darken;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
