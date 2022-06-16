@@ -1,9 +1,9 @@
 import React from "react";
-import AuthForm from "../components/auth/AuthForm";
 import AuthTemplate from "../components/auth/AuthTemplate";
-//import RegisterForm from "../containers/auth/RegisterForm";
-import { useDispatch } from "react-redux";
 import axios from "axios";
+import styled from "styled-components";
+import Button from "../components/Button";
+import { Link } from "react-router-dom";
 
 const Register = () => {
   const id_ref = React.useRef(null);
@@ -20,72 +20,108 @@ const Register = () => {
     axios
       .post("http://13.125.4.231/user/signup", data)
       .then((response) => {
-        console.log(response, "회원가입");
-        window.alert("회원가입 완료!");
-        window.location.replace("/login");
+        if (response.data.result) {
+          //console.log(response, "회원가입");
+          window.alert(response.data.errorMsg);
+          window.location.replace("/login");
+        } else {
+          window.alert(response.data.errorMsg);
+        }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.log(error, "회원가입 안됨"));
   };
 
   return (
     <AuthTemplate>
-      <div>
-        아이디 : <input ref={id_ref} /> <br />
-        닉네임: <input ref={nickName} /> <br />
-        비번 : <input ref={pw_ref} /> <br />
-        <button onClick={callSingup}>가입완료</button>
-      </div>
+      <AuthFormBlock>
+        <BoxArea>REGISTER</BoxArea>
+        {/* autocomplete 속성 >> 인풋에 자동완성하는 속성 
+     username 은 사용자 이름 , new-password 는 보통 비밀번호 자동완성 막기 위해서
+      새로운 비밀번호나 비밀번호 확인란에 들어간다고 함. 
+      input onChange, value
+      */}
+        <StyledInput
+          autoComplete="username"
+          name="username"
+          placeholder="아이디"
+          ref={id_ref}
+        />
+        <StyledInput
+          autoComplete="nickname"
+          name="nickname"
+          placeholder="닉네임 적어주세요"
+          ref={nickName}
+        />
+        <StyledInput
+          autoComplete="new-password"
+          name="password"
+          placeholder="비밀번호"
+          type="password"
+          ref={pw_ref}
+        />
+        <ButtonWithMarginTop fullWidth onClick={callSingup}>
+          REGISTER
+        </ButtonWithMarginTop>
+        <Footer>
+          <Link to="/login">SIGN IN</Link>
+        </Footer>
+      </AuthFormBlock>
     </AuthTemplate>
   );
 };
 
-export default Register;
+const AuthFormBlock = styled.div`
+  h3 {
+    margin: 0;
+    color: #444;
+    margin-bottom: 1rem;
+  }
+`;
 
-/* 
-//RegisterForm --> AuthTemplate안에 넣어야 함.
- // useEffect import
- import React from "react";
- // useSelector, useDispatch import
- import { useDispatch } from "react-redux";
- 
- 
- 
- const RegisterForm = () => {
-   const dispatch = useDispatch();
-   const { form } = useSelector((auth) => ({
-     form: auth.register,
-   }));
-   // input change event 로 액션 디스패치. 디스패치 : 액션을 발생시키는 것.
-   const onChange = (e) => {
-     const { value, name } = e.target;
-     // 액션 생성 함수 import
-     dispatch(
-       changeField({
-         form: "register",
-         key: name,
-         value,
-       })
-     );
-   };
-   // form submit event
-   const onSubmit = (e) => {
-     e.preventDefault();
-     // 구현 예정
-   };
-   // 컴포넌트 초기 렌더링시 form 초기화
-   useEffect(() => {
-     // 액션 생성 함수 import
-     dispatch(initializeForm("register"));
-   }, [dispatch]);
- 
-   return (
-     <AuthForm
-       type="register"
-       form={{ form }}
-       onChange={onChange}
-       onSubmit={onSubmit}
-     />
-   );
- };
- 
- export default RegisterForm; */
+//button margin
+const ButtonWithMarginTop = styled(Button)`
+  margin-top: 1rem;
+`;
+
+//styled input
+
+const StyledInput = styled.input`
+font-size:1rem;
+border:none;
+border-bottom: 1px solid #444;
+padding-bottom: 0.5rem;
+outline:none;
+width: 100%
+    &:focus{
+        color: $oc-teal-7;
+        border-bottom:1px solid #444;
+    }
+    &+&{
+        margin-top:1rem;
+    }
+`;
+
+const Footer = styled.div`
+  margin-top: 2rem;
+  text-align: right;
+  a {
+    color: 1px solid #6d5dcd;
+    text-decoration: underline;
+    &:hover {
+      color: 1px solid #487fd1;
+    }
+  }
+`;
+
+const BoxArea = styled.div`
+  display: block;
+  padding-bottom: 2rem;
+  text-align: center;
+  font-weight: bold;
+  font-size: 36px;
+  color: #444;
+  /* 글자 간격 */
+  letter-spacing: 2px;
+`;
+
+export default Register;

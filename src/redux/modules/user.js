@@ -6,20 +6,21 @@ export const loadUserDB = (users) => {
   return async function (dispatch) {
     await axios
       .post("http://13.125.4.231/user/login", users)
-      /*     console.log(userLists);
-    dispatch(loadUser(users)); */
       .then((response) => {
-        console.log(response);
+        //console.log(response);
         const accessToken = response.data.token;
-        localStorage.setItem("token", accessToken);
-        if (accessToken) {
+        if (accessToken !== null) {
           dispatch(loadUser(true));
+          localStorage.setItem("token", accessToken);
           console.log(response, "로그인");
+          window.alert(response.data.errorMsg);
           window.location.replace("/");
+        } else {
+          window.alert("로그인에 실패 했습니다.");
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.alert(error, "에러 발생");
       });
   };
 };
