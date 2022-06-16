@@ -5,23 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/modules/user";
 
 const Header = () => {
-  const user = useSelector((state) => state.user);
+  const { isLogin } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const [isLogin, setIsLogin] = useState(false);
 
   const deleteToken = () => {
     localStorage.removeItem("token");
     dispatch(logout());
-    setIsLogin(false);
   };
 
-  useEffect(() => {
-    if (user.isLogin) {
-      setIsLogin(true);
-    } else {
-      setIsLogin(false);
-    }
-  }, [user]);
 
   return (
     <Container>

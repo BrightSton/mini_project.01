@@ -4,9 +4,9 @@ const ADDR = "http://13.125.4.231";
 
 export const instance = axios.create({
   baseURL: ADDR,
-  headers: {
-    "Authorization": `Bearer ${localStorage.getItem("token")}`,
-  }
+  headers: localStorage.getItem("token") ? {
+    "Authorization": `Bearer ${localStorage.getItem("token")}`
+  } : {}
 });
 
 export const axiosUser = {

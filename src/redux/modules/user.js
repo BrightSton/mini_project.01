@@ -12,6 +12,7 @@ export const loadUserDB = (users) => {
         if (accessToken !== null) {
           dispatch(loadUser(true));
           localStorage.setItem("token", accessToken);
+          localStorage.setItem("username", response.data.username);
           console.log(response, "로그인");
           window.alert(response.data.errorMsg);
           window.location.replace("/");

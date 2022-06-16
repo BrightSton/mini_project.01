@@ -15,6 +15,7 @@ const Main = () => {
   useEffect(() => {
     if (activeCategory === "ALL") {
       axiosPost.getPost().then((response) => {
+        // console.log(typeof response.data);
         setPostList(response.data);
       }, []);
     } else {

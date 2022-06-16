@@ -34,14 +34,18 @@ const Detail = () => {
   }
 
   const likeClick = (e) => {
-    axiosPost.likePost(Number(params.id), post.likeByMe ? "unlike" : "like").then((response) => {
-      setPost((current) => {
-        const arr = {...current};
-        arr.likeByMe = post.likeByMe ? false : true;
-        arr.likeCount = post.likeByMe ? arr.likeCount - 1 : arr.likeCount + 1;
-        return arr;
+    if (isLogin) {
+      axiosPost.likePost(Number(params.id), post.likeByMe ? "unlike" : "like").then((response) => {
+        setPost((current) => {
+          const arr = {...current};
+          arr.likeByMe = post.likeByMe ? false : true;
+          arr.likeCount = post.likeByMe ? arr.likeCount - 1 : arr.likeCount + 1;
+          return arr;
+        });
       });
-    });
+    } else {
+      alert("로그인이 필요합니다.")
+    }
   }
 
   useEffect(() => {
