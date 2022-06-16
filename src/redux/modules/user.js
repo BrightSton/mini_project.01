@@ -25,6 +25,12 @@ export const loadUserDB = (users) => {
   };
 };
 
+export const logout = () => {
+  return async function (dispatch) {
+    dispatch(loadUser(false));
+  }
+}
+
 //Reducer
 const userSlice = createSlice({
   name: "user",

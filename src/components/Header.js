@@ -1,14 +1,17 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../redux/modules/user";
 
 const Header = () => {
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const [isLogin, setIsLogin] = useState(false);
 
   const deleteToken = () => {
     localStorage.removeItem("token");
+    dispatch(logout());
     setIsLogin(false);
   };
 

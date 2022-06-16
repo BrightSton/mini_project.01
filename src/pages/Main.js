@@ -5,10 +5,12 @@ import { useEffect, useState } from "react";
 import Card from "../components/Card";
 
 import { axiosPost } from "../axios/axiosData";
+import { useSelector } from "react-redux";
 
 const Main = () => {
   const [postList, setPostList] = useState([]);
   const [activeCategory, setActiveCategory] = useState("ALL");
+  const {isLogin} = useSelector((state) => state.user);
 
   useEffect(() => {
     if (activeCategory === "ALL") {
@@ -50,7 +52,7 @@ const Main = () => {
                 }
               )}
             </Categories>
-            <Link to="/write"><Button>추가하기</Button></Link>
+            {isLogin && <Link to="/write"><Button>추가하기</Button></Link>}
           </TopView>
           <CardList>
             {postList.map((post, index) => {

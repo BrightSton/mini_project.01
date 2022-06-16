@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const ADDR = "http://localhost:3000";
+const ADDR = "http://13.125.4.231";
 
 export const instance = axios.create({
   baseURL: ADDR,
