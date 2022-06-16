@@ -17,14 +17,7 @@ const Login = () => {
       username: id_ref.current.value,
       password: pw_ref.current.value,
     };
-    console.log(users);
     dispatch(loadUserDB(users));
-  };
-
-  const callLogout = () => {
-    axios.get("http://localhost:5001/signup/1").then((response) => {
-      localStorage.removeItem("nickname");
-    });
   };
 
   return (
@@ -35,12 +28,10 @@ const Login = () => {
         <button
           onClick={() => {
             callLogin();
-            console.log(callLogin, "로그인 버튼");
           }}
         >
           로그인
         </button>
-        <button onClick={callLogout}>로그아웃</button>
       </div>
     </AuthTemplate>
   );

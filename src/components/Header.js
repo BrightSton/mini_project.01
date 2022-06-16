@@ -10,7 +10,6 @@ const Header = () => {
   const deleteToken = () => {
     localStorage.removeItem("token");
     setIsLogin(false);
-    window.location.reload();
   };
 
   useEffect(() => {
@@ -30,7 +29,7 @@ const Header = () => {
         <ul>
           {isLogin ? (
             <li>
-              <button onClick={deleteToken}>로그아웃</button>
+              <Logout onClick={deleteToken}>로그아웃</Logout>
             </li>
           ) : (
             <li>
@@ -73,6 +72,19 @@ const Container = styled.div`
     a:hover {
       background-color: ${(props) => props.theme.hoverColor.blue};
     }
+  }
+`;
+
+const Logout = styled.div`
+  padding: 20px 30px;
+  border-radius: 10px;
+  background-color: ${props => props.theme.color.red};
+  color: ${props => props.theme.color.white};
+  transition: color .3s, background-color .3s;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${props => props.theme.hoverColor.red};
   }
 `;
 

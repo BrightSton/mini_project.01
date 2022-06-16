@@ -16,7 +16,7 @@ const Detail = () => {
   const navigate = useNavigate();
   const [post, setPost] = useState([]);
   const [commentList, setCommentList] = useState([]);
-  const { isLogin, nickname, username } = useSelector((state) => state.user);
+  const { isLogin } = useSelector((state) => state.user);
 
   const commentTag = useRef(null);
   const [toggleMenu, setToggleMenu] = useState(false);
@@ -24,11 +24,8 @@ const Detail = () => {
   const addCommentSubmit = (e) => {
     e.preventDefault();
 
-    axiosComment.addComment({
-      username: "test", // username
-      content: commentTag.current.value,
-      postId: Number(params.id)
-    }).then((response) => {
+    axiosComment.addComment(Number(params.id), commentTag.current.value)
+    .then((response) => {
       axiosComment.getCommentListByPostId(Number(params.id)).then((response) => {
         setCommentList(response.data);
       });
@@ -36,11 +33,7 @@ const Detail = () => {
   }
 
   const likeClick = (e) => {
-    axiosPost.likePost(Number(params.id), {
-      username: "test",
-      postNum: Number(params.id),
-      action: post.likeByMe ? "unlike" : "like"
-    }).then((response) => {
+    axiosPost.likePost(Number(params.id), post.likeByMe ? "unlike" : "like").then((response) => {
       setPost((current) => {
         const arr = {...current};
         arr.likeByMe = post.likeByMe ? false : true;
@@ -51,15 +44,14 @@ const Detail = () => {
   }
 
   useEffect(() => {
-
     axiosPost.getPostById(Number(params.id)).then((response) => {
       setPost(response.data);
     });
 
     axiosComment.getCommentListByPostId(Number(params.id)).then((response) => {
+      console.log(response);
       setCommentList(response.data);
     });
-
   }, []);
 
   return (

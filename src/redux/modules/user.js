@@ -1,27 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { axiosUser } from "../../axios/axiosData";
 import instance from "../../components/auth/Instance";
 
 // 로그인 창.
 export const loadUserDB = (users) => {
   return async function (dispatch) {
-    await axios
-      .post("http://13.125.4.231/user/login", users)
-      /*     console.log(userLists);
-    dispatch(loadUser(users)); */
-      .then((response) => {
-        console.log(response);
-        const accessToken = response.data.token;
-        localStorage.setItem("token", accessToken);
-        if (accessToken) {
-          dispatch(loadUser(true));
-          console.log(response, "로그인");
-          window.location.replace("/");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    try {
+      const response = await axiosUser.login(users);
+      const accessToken = response.data.token;
+      localStorage.setItem("token", accessToken);
+      if (accessToken) {
+        dispatch(loadUser(true));
+        window.location.replace("/");
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 };
 

@@ -11,7 +11,6 @@ function App() {
   const theme = defaultTheme;
   const dispatch = useDispatch();
   useEffect(() => {
-    console.log(localStorage.getItem("token"));
     if (localStorage.getItem("token") !== null) {
       dispatch(loadUser(true));
     }
