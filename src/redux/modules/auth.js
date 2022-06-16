@@ -31,7 +31,7 @@ const initialState = {
   register: {
     username: "",
     password: "",
-    passwordConfirm: "",
+    nickname: "",
   },
   login: {
     username: "",
@@ -57,5 +57,4 @@ const auth = handleActions(
   initialState
 );
 
-export default auth;
- */
+export default auth; */

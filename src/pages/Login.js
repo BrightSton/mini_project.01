@@ -6,12 +6,12 @@ import AuthTemplate from "../components/auth/AuthTemplate";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { loadUserDB } from "../redux/modules/user";
+import { useNavigate } from "react-router-dom";
 const Login = () => {
   const id_ref = React.useRef(null);
   const pw_ref = React.useRef(null);
 
   const dispatch = useDispatch();
-
   const callLogin = () => {
     let users = {
       username: id_ref.current.value,
@@ -21,10 +21,8 @@ const Login = () => {
     dispatch(loadUserDB(users));
   };
 
-  const callLogout = () => {
-    axios.get("http://localhost:5001/signup/1").then((response) => {
-      localStorage.removeItem("nickname");
-    });
+  const callResgister = () => {
+    window.location.replace("/register");
   };
 
   return (
@@ -40,7 +38,7 @@ const Login = () => {
         >
           로그인
         </button>
-        <button onClick={callLogout}>로그아웃</button>
+        <button onClick={callResgister}>회원가입</button>
       </div>
     </AuthTemplate>
   );

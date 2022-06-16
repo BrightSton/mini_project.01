@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import instance from "../../components/auth/Instance";
 
 // 로그인 창.
 export const loadUserDB = (users) => {
@@ -25,19 +24,6 @@ export const loadUserDB = (users) => {
   };
 };
 
-// 유저정보 확인
-export const loginCheckDB = () => {
-  return function (dispatch) {
-    instance.get("/user/check").then((response) =>
-      dispatch(
-        loginCheck({
-          username: response.data.username,
-        })
-      )
-    );
-  };
-};
-
 //Reducer
 const userSlice = createSlice({
   name: "user",
@@ -49,12 +35,8 @@ const userSlice = createSlice({
     loadUser: (state, action) => {
       state.isLogin = action.payload;
     },
-
-    loginCheck: (state, action) => {
-      state = action.payload;
-    },
   },
 });
 
-export const { loadUser, loginCheck } = userSlice.actions;
+export const { loadUser } = userSlice.actions;
 export default userSlice.reducer;

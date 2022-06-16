@@ -10,15 +10,11 @@ const Register = () => {
   const nickName = React.useRef(null);
   const pw_ref = React.useRef(null);
 
-  const dispatch = useDispatch();
-
   const callSingup = () => {
     let data = {
       username: id_ref.current.value,
       nickname: nickName.current.value,
       password: pw_ref.current.value,
-
-      isLogin: false,
     };
     console.log(data);
     axios
@@ -26,7 +22,7 @@ const Register = () => {
       .then((response) => {
         console.log(response, "회원가입");
         window.alert("회원가입 완료!");
-        //window.location.replace("/login");
+        window.location.replace("/login");
       })
       .catch((error) => console.log(error));
   };
@@ -37,7 +33,7 @@ const Register = () => {
         아이디 : <input ref={id_ref} /> <br />
         닉네임: <input ref={nickName} /> <br />
         비번 : <input ref={pw_ref} /> <br />
-        <button onClick={callSingup}>회원가입</button>
+        <button onClick={callSingup}>가입완료</button>
       </div>
     </AuthTemplate>
   );
